@@ -1,6 +1,5 @@
 export default function  UserDetail({
-    user,
-    close
+    user
 }){
     return(
         <>
@@ -10,7 +9,7 @@ export default function  UserDetail({
     <div className="detail-container">
       <header className="headers">
         <h2>User Detail</h2>
-        <button className="btn close" onClick={close}>
+        <button className="btn close">
           <svg
             aria-hidden="true"
             focusable="false"
