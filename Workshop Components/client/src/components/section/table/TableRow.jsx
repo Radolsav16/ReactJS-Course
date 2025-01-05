@@ -1,12 +1,36 @@
+import { requestApi } from "../../../service/requester";
 import  dateFormatter  from "../../../utils/dateFormatter"
+import { useEffect , useState } from 'react'
+import { baseUrl } from "../../../utils/paths";
+import UserDetail from "../userDetail/UserDetail";
+
 export default function TableRow({
     user,
-    onDetails,
-    
 }){
+
+  const [userInfo,SetUserInfo] = useState(null);
+  const [isRenderDetails,SetRenderDetails] = useState(false);
+
+  useEffect(() => {
+    (async function getUser() {
+     
+      const data = await requestApi.get(baseUrl+ `/${user._id}`);
     
+      SetUserInfo(data);
+    })()
+  })
+  
+
+
+  const seeDetails = () => {
+   
+    SetRenderDetails(true);
     
+  }
+
     return(
+      <>
+       {isRenderDetails && <UserDetail user={userInfo} />}
         <tr>
         <td>
           <img
@@ -55,7 +79,7 @@ export default function TableRow({
               ></path>
             </svg>
           </button>
-          <button className="btn info-btn" title="Info" onClick={onDetails(user)}>
+          <button className="btn info-btn" title="Info" onClick={seeDetails}>
             <svg
               aria-hidden="true"
               focusable="false"
@@ -74,5 +98,6 @@ export default function TableRow({
           </button>
         </td>
       </tr>
+      </>
     )
 }
